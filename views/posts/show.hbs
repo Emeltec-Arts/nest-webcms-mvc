@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <article class="blog-post">
+                <h1 class="blog-post-title">{{post.title}}</h1>
+                <p class="blog-post-meta text-muted">
+                    {{formatDate post.createdAt}} by {{post.author.username}}
+                </p>
+
+                {{#if user}}
+                    {{#if (eq user.id post.author.id)}}
+                    <div class="mb-4">
+                        <a href="/posts/{{post.id}}/edit" class="btn btn-primary">Edit Post</a>
+                        <form action="/posts/{{post.id}}" method="POST" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">
+                                Delete Post
+                            </button>
+                        </form>
+                    </div>
+                    {{/if}}
+                {{/if}}
+
+                <div class="blog-post-content">
+                    {{{post.content}}}
+                </div>
+            </article>
+
+            <div class="mt-5">
+                <a href="/admin/posts" class="btn btn-secondary">Back to Posts</a>
+            </div>
+        </div>
+    </div>
+</div>
