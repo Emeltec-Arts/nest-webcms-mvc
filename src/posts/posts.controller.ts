@@ -71,11 +71,12 @@ export class PostsController {
   async edit(@Param('id') id: string, @Req() req) {
     const post = await this.postsService.findOne(+id);
 
-    if (post.author.id !== (req.user as User).id) {
+    if (post.author.id !== (req.user).userId) {
       throw new Error('You can only edit your own posts');
     }
 
     return {
+      layout: 'layouts/admin',
       title: 'Edit Post',
       post,
     };

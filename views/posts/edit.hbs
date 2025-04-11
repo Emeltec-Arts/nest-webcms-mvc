@@ -9,7 +9,7 @@
             </div>
             {{/if}}
 
-            <form action="/posts/{{post.id}}" method="POST">
+            <form action="/posts/{{post.id}}" method="PATCH">
                 <input type="hidden" name="_method" value="PATCH">
                 
                 <div class="mb-3">
@@ -18,8 +18,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="content" class="form-label">Content</label>
-                    <textarea class="form-control" id="content" name="content" rows="10" required>{{post.content}}</textarea>
+                    <label for="editorText" class="form-label">Content</label>
+                    <textarea id="editorText" name="content" >{{post.content}}</textarea>
                 </div>
 
                 <div class="mb-3">
@@ -37,19 +37,4 @@
     </div>
 </div>
 
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
-<script>
-    tinymce.init({
-        selector: '#content',
-        height: 500,
-        menubar: false,
-        plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar: 'undo redo | formatselect | bold italic backcolor | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help'
-    });
-</script>
+
