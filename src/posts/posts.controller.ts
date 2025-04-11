@@ -43,7 +43,7 @@ export class PostsController {
   ) {
     try {
       await this.postsService.create(createPostDto, req.user as User);
-      res.redirect('/posts');
+      res.redirect('/admin/posts');
     } catch (error) {
       return res.render('posts/create', {
         title: 'Create New Post',
@@ -56,7 +56,7 @@ export class PostsController {
 
   @Get(':slug')
   @Render('posts/show')
-  async show(@Param('slug') slug: string) {
+  async showBySlug(@Param('slug') slug: string) {
     const post = await this.postsService.findBySlug(slug);
     return {
       layout: 'layouts/admin',
@@ -71,7 +71,7 @@ export class PostsController {
   async edit(@Param('id') id: string, @Req() req) {
     const post = await this.postsService.findOne(+id);
 
-    if (post.author.id !== (req.user).userId) {
+    if (post.author.id !== (req.user as User).id) {
       throw new Error('You can only edit your own posts');
     }
 
@@ -82,7 +82,7 @@ export class PostsController {
     };
   }
 
-  @Patch(':id')
+  @Post(':id')
   @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
@@ -92,7 +92,7 @@ export class PostsController {
   ) {
     try {
       await this.postsService.update(+id, updatePostDto, req.user as User);
-      res.redirect('/posts/' + id);
+      res.redirect('/admin/posts');
     } catch (error) {
       return res.render('posts/edit', {
         title: 'Edit Post',
